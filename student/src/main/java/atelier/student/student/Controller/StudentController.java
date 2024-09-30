@@ -1,26 +1,32 @@
 package atelier.student.student.Controller;
 
-import atelier.student.student.Entity.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import atelier.student.student.Entity.Student;
+import atelier.student.student.Repository.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
 
-    private List<Student> students = new ArrayList<>();
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @GetMapping
+    public Iterable<Student> getStudents() {
+        return studentRepository.findAll();
+    }
 
     @GetMapping("/add")
-    public List<Student> getAllStudents() {
-        students.add(new Student("Edem", "Gari"));
-        students.add(new Student("Mariem", "Sorciere"));
-        students.add(new Student("Gab", "Divine"));
-        return students;
+    public Iterable<Student> getAllStudents() {
+        studentRepository.save(new Student("Edem", "Gari"));
+        studentRepository.save(new Student("Mariem", "Sorciere"));
+        studentRepository.save(new Student("Gab", "Divine"));
+        return studentRepository.findAll();
     }
 
     @GetMapping("/create")
@@ -29,12 +35,9 @@ public class StudentController {
         @RequestParam(value = "nom", defaultValue = "Unknown") String nom
     ) {
         Student newStudent = new Student(prenom, nom);
-        students.add(newStudent);
-        return newStudent;
+        return studentRepository.save(newStudent);
     }
 
-    @GetMapping
-    public List<Student> getStudents() {
-        return students;
-    }
+    
+
 }
