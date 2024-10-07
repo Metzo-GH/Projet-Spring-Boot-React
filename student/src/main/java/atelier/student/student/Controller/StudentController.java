@@ -21,14 +21,6 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/add")
-    public Iterable<Student> getAllStudents() {
-        studentRepository.save(new Student("Edem", "Gari"));
-        studentRepository.save(new Student("Mariem", "Sorciere"));
-        studentRepository.save(new Student("Gab", "Divine"));
-        return studentRepository.findAll();
-    }
-
     @GetMapping("/create")
     public Student createStudent(
         @RequestParam(value = "prenom", defaultValue = "Unknown") String prenom,

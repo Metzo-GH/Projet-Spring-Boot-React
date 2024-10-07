@@ -22,14 +22,6 @@ public class StageControler {
         return stageRepository.findAll();
     }
 
-    @GetMapping("/add")
-    public Iterable<Stage> getAllStages() {
-        stageRepository.save(new Stage("DevOps", "Google"));
-        stageRepository.save(new Stage("MOA", "Facebook"));
-        stageRepository.save(new Stage("Ingénieur", "WhatsApp"));
-        return stageRepository.findAll();
-    }
-
     @GetMapping("/create")
     public Stage createStage(
         @RequestParam(value = "titre", defaultValue = "Unknown") String titre,
